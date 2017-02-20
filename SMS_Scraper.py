@@ -2,15 +2,15 @@ from bs4 import BeautifulSoup
 import urllib2
 import pandas as pd
 
-with open("smsData.csv", "wb") as sms:
+with open("DataSMS.csv", "wb") as sms:
 
-    # page scraped: 122-376
-    n = 122
-    while n < 376:
-        soup = BeautifulSoup(urllib2.urlopen("http://laporsms.com/laporan-masyarakat/index.php?r=site/index&Sms_page=" + str(n)).read(), "lxml")
-        n += 1
+    # page scraped: 131-383
+    i = 131
+    n = 385
+    while i < n:
+        soup = BeautifulSoup(urllib2.urlopen("http://laporsms.com/laporan-masyarakat/index.php?r=site/index&Sms_page="+str(i)).read(), "lxml")
         table = soup.find('table')
-
+        i += 1
         # generate lists
         type_ = []
         content_ = []
@@ -32,8 +32,7 @@ with open("smsData.csv", "wb") as sms:
         smsData['submitted'] = submitted_
         smsData['received'] = received_
         smsData['sender'] = sender_
-        # start the index from 1 not 0
         smsData.index += 1
-        # write to csv file
-        smsData.append(smsData, ignore_index=True).to_csv(sms, header=False)
+        smsData.append(smsData, ignore_index=True)
+        smsData.to_csv(sms, header=False)
         # print smsData
