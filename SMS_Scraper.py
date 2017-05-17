@@ -1,12 +1,17 @@
+
 from bs4 import BeautifulSoup
 import urllib2
 import pandas as pd
 
-with open("DataSMS.csv", "wb") as sms:
+TrainingOutput = "DataSMS.csv"
+TestingOutput = "DataTestSMS.csv"
 
-    # page scraped: 131-383
-    i = 131
-    n = 385
+with open(TestingOutput, "wb") as sms:
+
+    # page scraped: 131-383 (Jun-Nov 2016) AS INITIAL DATA TO BE TRAINED
+    # page scraped: 1-50 AS AS TESTING DATA, scraped at: May 17, 2017
+    i = 1
+    n = 51
     while i < n:
         soup = BeautifulSoup(urllib2.urlopen("http://laporsms.com/laporan-masyarakat/index.php?r=site/index&Sms_page="+str(i)).read(), "lxml")
         table = soup.find('table')
